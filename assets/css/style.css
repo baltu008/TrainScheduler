@@ -1,0 +1,33 @@
+body {
+    background-image: url("../images/traintracks_background.jpg");
+    opacity: 0.9;
+    max-height: 100%
+}
+
+.jumbotron-header {
+    background-color: rgb(53, 52, 52);
+    color: #fff;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.headerLine {
+    background-color: black;
+}
+
+.jumbotron-schedule {
+    background-color: rgb(80, 80, 80);
+    color: #fff;
+    padding: 20px;
+}
+
+.jumbotron-fill {
+    background-color: rgb(80, 80, 80);
+    color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.fillLine {
+    background-color: #fff;
+}
