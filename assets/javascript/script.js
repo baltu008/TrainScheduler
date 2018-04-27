@@ -1,5 +1,7 @@
 src = "https://www.gstatic.com/firebasejs/4.13.0/firebase.js"
 
+var trainMessageArray = [];
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyCmPkmRQci7aKiP-eFVwssDXxPzvzyuTBY",
@@ -27,17 +29,12 @@ $("#add-train-btn").on("click", function (event) {
         name: trainName,
         dest: trainDestination,
         time: trainTime,
-        freq: trainFrequency
+        freq: trainFrequency,
+        updatedTime: ""
     };
 
     // Upload train data to database
     database.ref().push(newTrain);
-
-    // Log to console
-    console.log(newTrain.name);
-    console.log(newTrain.dest);
-    console.log(newTrain.time);
-    console.log(newTrain.freq);
 
     // on click, replace submit with "succesfully added!"
     $("#add-train-btn").html(`Train Successfully Added!`)
@@ -57,20 +54,28 @@ database.ref().on("child_added", function (childSnapshot, prevChildKey) {
     // Storing in variables
     var trainName = childSnapshot.val().name;
     var trainDestination = childSnapshot.val().dest;
-    var trainTime = childSnapshot.val().time;
+    var startTime = childSnapshot.val().time;
     var trainFrequency = childSnapshot.val().freq;
 
-    // Math for next arrival
-    var startTime = moment("12:16 am", "HH:mm a");
-    var endTime = moment("06:12 pm", "HH:mm a");
-    var diff = endTime.diff(startTime);
+    var startTimeCalculated = moment(startTime, "HH:mm").subtract(1, "years");
 
-    var trainNextArrival = moment('12:20').diff(moment());
-    console.log(trainNextArrival);
+    // set Current time
+    var currentTime = moment();
 
-    // Math for minutes away
-    var trainMinutesAway = moment().
-        $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" +
-            trainFrequency + "</td><td>" + trainNextArrival + "</td><td>" + trainMinutesAway + "</td>");
+    // total minutes = current time - start time
+    var totalMinutesPast = moment().diff(moment(startTimeCalculated), "minutes");
+
+    // determined remainder for next arrival in "minutes"
+    var moduloRemainder = totalMinutesPast % trainFrequency;
+
+    // finalize train arriving in x minutes
+    var minutesAway = trainFrequency - moduloRemainder;
+
+    // determine next arrival time
+    var nextArrivalTime = moment().add(minutesAway, "minutes");
+    var nextArrival = moment(nextArrivalTime).format("hh:mm a");
+
+    $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" +
+        trainFrequency + "</td><td>" + nextArrival + "</td><td>" + minutesAway + "</td>");
 });
 
