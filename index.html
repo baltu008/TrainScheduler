@@ -7,9 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Train Scheduler</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-        crossorigin="anonymous">
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Moment.js reference -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </head>
 
 <body>
@@ -29,7 +37,7 @@
             <div class="col-12">
                 <div class="jumbotron jumbotron-schedule">
                     <h3>Current Train Schedule</h3>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="train-table">
                         <thead>
                             <tr>
                                 <th>Train Name</th>
@@ -53,25 +61,24 @@
                 <div class="jumbotron jumbotron-fill">
                     <h3>Find a Train!</h3>
                     <hr class="fillLine">
-                    <form action="/action_page.php">
+                    <form class="table table-hover" id="train-table">
                         <div class="form-group">
-                            <label for="name">Train Name</label>
-                            <input type="text" class="form-control" id="trainName">
+                            <label for="train-name-input">Train Name</label>
+                            <input type="text" class="form-control" id="train-name-input">
                         </div>
                         <div class="form-group">
-                            <label for="destination">Destination</label>
-                            <input type="text" class="form-control" id="trainDestination">
+                            <label for="destination-input">Destination</label>
+                            <input type="text" class="form-control" id="destination-input">
                         </div>
                         <div class="form-group">
-                            <label for="time">First Train Time (HH:mm-military time)</label>
-                            <input type="text" class="form-control" id="trainTime">
+                            <label for="time-input">First Train Time (HH:mm-military time)</label>
+                            <input type="text" class="form-control" id="time-input">
                         </div>
                         <div class="form-group">
-                            <label for="frequency">Frequency</label>
-                            <input type="text" class="form-control" id="trainFrequency">
+                            <label for="frequency-input">Frequency</label>
+                            <input type="text" class="form-control" id="frequency-input">
                         </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-
+                        <button class="btn btn-primary" id="add-train-btn" type="submit">Submit</button>
                     </form>
                 </div>
             </div>
